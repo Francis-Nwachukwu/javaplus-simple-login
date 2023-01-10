@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Signin() {
+  const [hasError, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -17,11 +19,16 @@ function Signin() {
       navigate("/welcome");
     } catch (err) {
       console.log(err);
+      setError(true);
+      setErrorMsg(err.response.data.message);
     }
   };
 
   return (
     <div className="App">
+      {/* displays the error message  */}
+      {hasError && errorMsg}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email</label>
